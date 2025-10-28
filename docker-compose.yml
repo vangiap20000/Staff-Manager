@@ -1,0 +1,42 @@
+version: '2'
+services:
+    db: 
+        container_name: staff_manager_db
+        image: mysql:8.0
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: staff_manager
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+        ports:
+          - "3307:3306"
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: staff_manager_phpmyadmin
+        ports:
+          - "8085:80"
+        environment:
+          PMA_HOST: staff_manager_db
+          PMA_PORT: '3306'
+          PMA_USER: user
+          PMA_PASSWORD: password
+        depends_on:
+          - db
+    app:
+        container_name: staff_manager_app
+        build: .
+        command: bundle exec rails s -p 3000 -b '0.0.0.0'
+        volumes: 
+          - ".:/app"
+        ports: 
+          - "3001:3000"
+        depends_on:
+          - db
+        links:
+          - db
+        environment:
+          DB_USER: root
+          DB_NAME: app
+          DB_PASSWORD: password
+          DB_HOST: db
