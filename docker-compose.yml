@@ -36,7 +36,7 @@ services:
         links:
           - db
         environment:
-          DB_USER: root
-          DB_NAME: app
+          DB_USER: user
+          DB_NAME: staff_manager
           DB_PASSWORD: password
-          DB_HOST: db
+          DB_HOST: staff_manager_db
