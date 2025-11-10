@@ -3,7 +3,6 @@ services:
     db: 
         container_name: staff_manager_db
         image: mysql:8.0
-        restart: always
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: staff_manager

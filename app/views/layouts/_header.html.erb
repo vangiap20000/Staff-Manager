@@ -1,0 +1,29 @@
+<header class="bg-white shadow-sm">
+  <div class="flex items-center justify-between px-6 py-4">
+    <div class="flex items-center">
+      <h2 class="text-xl font-semibold text-gray-800">
+        <%= content_for?(:page_title) ? yield(:page_title) : "Dashboard" %>
+      </h2>
+    </div>
+    
+    <div class="flex items-center space-x-4">
+      <!-- User menu -->
+      <div class="relative">
+        <input type="checkbox" id="dropdown-toggle" class="hidden peer" />
+        <label for="dropdown-toggle" class="flex items-center space-x-2 px-4 py-2 rounded-md cursor-pointer">
+          <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">User</div>
+          <span class="text-gray-700">user@gmail.com</span>
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </label>
+        
+        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden peer-checked:block">
+          <%= link_to "Profile", "", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+          <div class="border-t border-gray-100"></div>
+          <%= button_to "Logout", "", method: :delete, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

@@ -23,10 +23,12 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_29_071444) do
     t.datetime "created_at", null: false
     t.string "email"
     t.string "name"
-    t.string "phone_number", limit: 13
+    t.string "password_digest"
+    t.string "phone_number"
     t.integer "role"
     t.bigint "team_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["team_id"], name: "index_users_on_team_id"
   end
 
