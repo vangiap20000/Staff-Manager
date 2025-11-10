@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   root "home#index"
   get "home", to: "home#index"
   get "login", to: "auth#login"
-  post "handel-login", to: "auth#handelLogin"
+  post "login", to: "auth#handelLogin"
+  delete 'logout', to: 'auth#destroy'
   get "forgot-password", to: "auth#forgotPassword"
   post "handel-forgot-password", to: "auth#handelForgotPassword"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

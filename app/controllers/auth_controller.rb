@@ -1,4 +1,5 @@
 class AuthController < ApplicationController
+  before_action :redirect_if_logged_in, only: [:login, :handelLogin, :forgotPassword, :handelForgotPassword]
   layout "authentication"
   
   def login
@@ -7,9 +8,14 @@ class AuthController < ApplicationController
 
   def handelLogin
     @form = LoginForm.new(login_params)
-    if @form.save
-      redirect_to root_path, notice: "Login successfully!"
+    if @form.login
+      session[:user_id] = LoginForm.user.id
+      flash[:notice] = "Login successful!"
+      redirect_to root_path
     else
+      unless LoginForm.validation_enabled
+        flash.now[:alert] = "Incorrect email or password"
+      end
       render :login
     end
   end
@@ -26,6 +32,12 @@ class AuthController < ApplicationController
     else
       render "auth/forgot_password"
     end
+  end
+
+  def destroy
+    session[:user_id] = nil
+    flash[:notice] = "Signed out"
+    redirect_to login_path
   end
 
   private
