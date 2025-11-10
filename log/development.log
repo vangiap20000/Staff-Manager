@@ -5366,3 +5366,34 @@ Processing by AuthController#handelLogin as HTML
 Completed 200 OK in 4ms (Views: 3.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
 
 
+Started POST "/handel-login" for 172.21.0.1 at 2025-11-10 09:31:21 +0000
+Cannot render console from 172.21.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (8.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC /*application='App'*/[0m
+Processing by AuthController#handelLogin as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "login_form"=>{"email"=>"[FILTERED]", "password"=>"[FILTERED]"}, "commit"=>"Log In"}
+  Rendering layout layouts/authentication.html.erb
+  Rendering auth/login.html.erb within layouts/authentication
+  Rendered auth/login.html.erb within layouts/authentication (Duration: 7.9ms | GC: 0.6ms)
+  Rendered layouts/_flash_messages.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/authentication.html.erb (Duration: 14.3ms | GC: 1.0ms)
+Completed 200 OK in 51ms (Views: 22.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.7ms)
+
+
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN /*application='App'*/[0m
+  [1m[36mTeam Create (2.0ms)[0m  [1m[32mINSERT INTO `teams` (`name`, `max_member`, `created_at`, `updated_at`) VALUES ('Corporate-1', NULL, '2025-11-10 10:00:48.171178', '2025-11-10 10:00:48.171178') /*application='App'*/[0m
+  [1m[36mTRANSACTION (4.9ms)[0m  [1m[35mCOMMIT /*application='App'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='App'*/[0m
+  [1m[36mUser Create (1.6ms)[0m  [1m[32mINSERT INTO `users` (`name`, `email`, `avatar`, `phone_number`, `role`, `team_id`, `password_digest`, `created_at`, `updated_at`) VALUES ('Super admin', 'superAdmin@gmail.com', NULL, NULL, NULL, 1, '$2a$12$Z1QEUteQnmz2Vw0YjWtX7eRZnfzhk/yJZleYS7za7It6.5w2onegK', '2025-11-10 10:00:48.189556', '2025-11-10 10:00:48.189556') /*application='App'*/[0m
+  [1m[36mTRANSACTION (3.0ms)[0m  [1m[35mCOMMIT /*application='App'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='App'*/[0m
+  [1m[36mTeam Create (1.0ms)[0m  [1m[32mINSERT INTO `teams` (`name`, `max_member`, `created_at`, `updated_at`) VALUES ('Corporate-1', NULL, '2025-11-10 10:01:55.692154', '2025-11-10 10:01:55.692154') /*application='App'*/[0m
+  [1m[36mTRANSACTION (5.2ms)[0m  [1m[35mCOMMIT /*application='App'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='App'*/[0m
+  [1m[36mUser Create (2.1ms)[0m  [1m[32mINSERT INTO `users` (`name`, `email`, `avatar`, `phone_number`, `role`, `team_id`, `password_digest`, `created_at`, `updated_at`) VALUES ('Super admin', 'superAdmin@gmail.com', NULL, NULL, NULL, 2, '$2a$12$bNLDRuqnxAEJKI85eoiTz.qnkyY9drBEDV/JR7FzQn969HzBj3PK.', '2025-11-10 10:01:55.706573', '2025-11-10 10:01:55.706573') /*application='App'*/[0m
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[31mROLLBACK /*application='App'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='App'*/[0m
+  [1m[36mTeam Create (1.5ms)[0m  [1m[32mINSERT INTO `teams` (`name`, `max_member`, `created_at`, `updated_at`) VALUES ('Corporate-1', NULL, '2025-11-10 10:02:03.955832', '2025-11-10 10:02:03.955832') /*application='App'*/[0m
+  [1m[36mTRANSACTION (6.0ms)[0m  [1m[35mCOMMIT /*application='App'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='App'*/[0m
+  [1m[36mUser Create (2.0ms)[0m  [1m[32mINSERT INTO `users` (`name`, `email`, `avatar`, `phone_number`, `role`, `team_id`, `password_digest`, `created_at`, `updated_at`) VALUES ('Super admin', 'superAdmin@gmail.com', NULL, NULL, NULL, 3, '$2a$12$oCZyFp.Q9S8gG7ppJ/.qoef5vau9n2uTnTdu4kF59pY4Me9XOIXEG', '2025-11-10 10:02:03.975129', '2025-11-10 10:02:03.975129') /*application='App'*/[0m
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[31mROLLBACK /*application='App'*/[0m

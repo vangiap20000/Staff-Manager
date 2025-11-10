@@ -1,0 +1,15 @@
+# Ignore bundler config
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+!/log/.keep
+/tmp
+!/tmp/.keep
+/tmp/*
+
+# Ignore uploaded files in storage (if using Active Storage)
+/storage/*
+!/storage/.keep
+
+Gemfile.lock
