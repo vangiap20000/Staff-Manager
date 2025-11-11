@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   delete 'logout', to: 'auth#destroy'
   get "forgot-password", to: "auth#forgotPassword"
   post "handel-forgot-password", to: "auth#handelForgotPassword"
+
+  resources :users
+  resources :teams
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

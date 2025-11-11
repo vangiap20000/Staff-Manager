@@ -1,0 +1,1 @@
+Rails.application.config.const = Rails.application.config_for(:const)

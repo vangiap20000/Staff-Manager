@@ -27,9 +27,13 @@ class AuthController < ApplicationController
 
   def handelForgotPassword
     @forgotPassForm = ForgotPassForm.new(forgot_pass_params)
-    if @forgotPassForm.save
-      redirect_to forgot_password_path, notice: "Forgot password successfully, we have sent you the password via email!"
+    if @forgotPassForm.forgotPassword
+      flash[:notice] = "Forgot password successfully, we have sent you the password via email!"
+      redirect_to login_path
     else
+      unless ForgotPassForm.validation_enabled
+        flash.now[:alert] = "Email not found."
+      end
       render "auth/forgot_password"
     end
   end

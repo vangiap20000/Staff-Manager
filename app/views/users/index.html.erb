@@ -1,0 +1,104 @@
+<% content_for :page_title, "List users" %>
+
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0 sm:space-x-2">
+  <%= link_to "Create New", new_user_path, class: "px-4 py-2 bg-green-600 text-white rounded-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md" %>
+
+  <form action="<%= users_path %>" method="get" class="flex flex-1 max-w-md">
+    <input 
+      type="text" 
+      name="search" 
+      placeholder="Search users..." 
+      class="flex-1 px-4 py-2 border border-gray-300 rounded-l-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
+      value="<%= params[:search] %>"
+    >
+    <button 
+      type="submit" 
+      class="px-4 py-2 bg-indigo-600 text-white rounded-r-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"
+    >
+      Search
+    </button>
+  </form>
+</div>
+
+
+<div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Email
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Phone number
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Team
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Role
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <% @users.each do |user| %>
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10">
+                               <img class="h-10 w-10 rounded-full" 
+                                    src="<%= user.avatar.present? ? user.avatar : 'https://i.pravatar.cc/150?img=' + user.id.to_s %>" 
+                                    alt="<%= user.name %>">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900"><%= user.name %></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><%= user.email %></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><%= user.phone_number %></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><%= user.team.name %></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <%= render 'common/badge' , type: user.role, text: @roles[user.role] %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex space-x-3">
+                        <%= link_to user_path(user), method: :get, 
+                            class: [
+                                "inline-flex items-center text-indigo-600 hover:text-indigo-900 transition-colors",
+                                current_user.id === user.id ? "opacity-50 cursor-not-allowed pointer-events-none" : ""
+                            ].join(" ") do %>
+                            <%= render 'common/icon_edit' %>
+                        <% end %>
+                        <button class="text-red-600 hover:text-red-900 transition-colors delete-action <%= current_user.id === user.id ? 'opacity-50 cursor-not-allowed pointer-events-none' : '' %>" command="show-modal" commandfor="dialog" data-path="<%= user_path(user) %>">
+                            <%= render 'common/icon_delete'%>
+                        </button>
+                    </td>
+
+                </tr>
+            <% end %>
+            <% if @users.empty? %>
+                <tr>
+                    <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                    No data found.
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+<div class="mt-4 text-center">
+  <%= paginate @users %>
+</div>
+
+<%= render 'common/modal_confirm', method: :delete, path: user_path(0) %>

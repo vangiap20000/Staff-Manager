@@ -4,7 +4,7 @@ class ForgotPassForm
 
   attr_accessor :email
 
-  validates :email, presence: { message: "Email cannot be blank" }, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, presence: { message: "Email cannot be blank" }, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def self.validation_enabled
     @@isValidationEnabled
@@ -16,19 +16,19 @@ class ForgotPassForm
       return false
     end
 
+    @@isValidationEnabled = false
     user = User.find_by(email: self.email)
     if user
       new_password = SecureRandom.alphanumeric(10)
 
-      user.update(password: new_password, password_confirmation: new_password)
+      user.update(password: new_password)
 
       UserMailer.with(user: user, password: new_password).send_new_password.deliver_now
 
-      flash[:notice] = "A new password has been sent to your email."
-      redirect_to login_path
-    else
-      flash[:alert] = "Email not found."
-      render :new
+      return true
     end
+
+    return false
+
   end
 end

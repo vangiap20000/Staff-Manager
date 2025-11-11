@@ -1,4 +1,4 @@
-class LoginForm
+class User
   @@isValidationEnabled = false
   @@user = nil
 
@@ -11,21 +11,5 @@ class LoginForm
 
   def self.validation_enabled
     @@isValidationEnabled
-  end
-
-  def self.user
-    @@user
-  end
-
-  def login
-    unless valid?
-      @@isValidationEnabled = true
-      return false
-    end
-
-    @@isValidationEnabled = false
-    user = User.find_by(email: self.email)
-    @@user = user
-    user&.authenticate(self.password)
   end
 end
