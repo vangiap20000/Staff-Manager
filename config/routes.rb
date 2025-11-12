@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get "forgot-password", to: "auth#forgot_password"
   post "handel-forgot-password", to: "auth#handelforgot_password"
 
-  resources :users
+  resources :users, only: [:index, :new, :destroy]
+  post 'users/new', to: 'users#create'
+
   resources :teams
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

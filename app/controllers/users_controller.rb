@@ -59,8 +59,8 @@ class UsersController < ApplicationController
   def set_roles_and_teams
     constants = Rails.configuration.const
 
-    @roles_values = constants['role_value'].dup # dup để không sửa hẳn hash gốc
-    @roles_values.delete(1)                      # xóa super admin
+    @roles_values = constants['role_value'].dup 
+    @roles_values.delete(1)
     @role_value_options = @roles_values.map { |key, value| [value, key] }
     @roles = constants['role']
 

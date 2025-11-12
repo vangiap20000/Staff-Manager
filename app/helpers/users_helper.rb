@@ -21,10 +21,31 @@ module UsersHelper
       user_children.destroy_all if user_children.count > 1
     end
 
-    return user.destroy ? true : false
+    user.avatar.purge if user.avatar.attached?
+
+    user.destroy ? true : false
   end
 
   def is_supper_admin
     current_user.role == Rails.configuration.const['role'][:superAdmin]
   end
+
+  def create_user(form)
+    user = User.new(
+      name: form.name,
+      email: form.email,
+      phone_number: form.phone_number,
+      role: form.role,
+      team_id: form.team_id,
+      created_by_id: form.current_user.id,
+      password: form.password
+    )
+
+    if user.save && form.avatar.present?
+      user.avatar.attach(form.avatar)
+    end
+
+    user.persisted? ? user : nil
+  end
+  
 end

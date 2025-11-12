@@ -11,7 +11,13 @@
       <div class="relative">
         <input type="checkbox" id="dropdown-toggle" class="hidden peer" />
         <label for="dropdown-toggle" class="flex items-center space-x-2 px-4 py-2 rounded-md cursor-pointer">
-          <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold"><%= current_user.name.split.map { |word| word[0] }.join.upcase %></div>
+          <% if current_user.avatar.attached? %>
+            <img class="w-8 h-8 rounded-full" src="<%= url_for(current_user.avatar) %>" alt="<%= current_user.name %>">
+          <% else %>
+            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+              <%= current_user.name.split.map { |word| word[0] }.join.upcase %>
+            </div>
+          <% end %>
           <span class="text-gray-700"><%= current_user.email %></span>
           <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
