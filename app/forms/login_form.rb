@@ -1,5 +1,5 @@
 class LoginForm
-  @@isValidationEnabled = false
+  @@is_validation_enabled = false
   @@user = nil
 
   include ActiveModel::Model
@@ -10,7 +10,7 @@ class LoginForm
   validates :password, presence: { message: "Password cannot be blank" }, length: { minimum: 8 }
 
   def self.validation_enabled
-    @@isValidationEnabled
+    @@is_validation_enabled
   end
 
   def self.user
@@ -19,12 +19,14 @@ class LoginForm
 
   def login
     unless valid?
-      @@isValidationEnabled = true
+      @@is_validation_enabled = true
       return false
     end
 
-    @@isValidationEnabled = false
-    user = User.find_by(email: self.email)
+    @@is_validation_enabled = false
+    user = User.where(email: self.email)
+          .where.not(role: Rails.configuration.const['role'][:member])
+          .first
     @@user = user
     user&.authenticate(self.password)
   end

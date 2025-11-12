@@ -2,10 +2,10 @@ Rails.application.routes.draw do
   root "home#index"
   get "home", to: "home#index"
   get "login", to: "auth#login"
-  post "login", to: "auth#handelLogin"
+  post "login", to: "auth#handel_login"
   delete 'logout', to: 'auth#destroy'
-  get "forgot-password", to: "auth#forgotPassword"
-  post "handel-forgot-password", to: "auth#handelForgotPassword"
+  get "forgot-password", to: "auth#forgot_password"
+  post "handel-forgot-password", to: "auth#handelforgot_password"
 
   resources :users
   resources :teams

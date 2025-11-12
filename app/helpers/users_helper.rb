@@ -16,11 +16,15 @@ module UsersHelper
     end
 
     role = Rails.configuration.const['role']
-    if user.role == role[:admin]
+    if user.role == role[:admin] && current_user.role == role[:super_admin]
       user_children = User.where(created_by_id: user.id).where(role: role[:member])
       user_children.destroy_all if user_children.count > 1
     end
 
     return user.destroy ? true : false
+  end
+
+  def is_supper_admin
+    current_user.role == Rails.configuration.const['role'][:superAdmin]
   end
 end

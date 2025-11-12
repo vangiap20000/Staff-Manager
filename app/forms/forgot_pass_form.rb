@@ -1,5 +1,5 @@
 class ForgotPassForm
-  @@isValidationEnabled = false
+  @@is_validation_enabled = false
   include ActiveModel::Model
 
   attr_accessor :email
@@ -7,16 +7,16 @@ class ForgotPassForm
   validates :email, presence: { message: "Email cannot be blank" }, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   def self.validation_enabled
-    @@isValidationEnabled
+    @@is_validation_enabled
   end
 
-  def forgotPassword
+  def forgot_password
     unless valid?
-      @@isValidationEnabled = true
+      @@is_validation_enabled = true
       return false
     end
 
-    @@isValidationEnabled = false
+    @@is_validation_enabled = false
     user = User.find_by(email: self.email)
     if user
       new_password = SecureRandom.alphanumeric(10)

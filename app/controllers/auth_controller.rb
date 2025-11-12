@@ -1,12 +1,12 @@
 class AuthController < ApplicationController
-  before_action :redirect_if_logged_in, only: [:login, :handelLogin, :forgotPassword, :handelForgotPassword]
+  before_action :redirect_if_logged_in, only: [:login, :handel_login, :forgot_password, :handelforgot_password]
   layout "authentication"
   
   def login
     @form = LoginForm.new
   end
 
-  def handelLogin
+  def handel_login
     @form = LoginForm.new(login_params)
     if @form.login
       session[:user_id] = LoginForm.user.id
@@ -20,14 +20,14 @@ class AuthController < ApplicationController
     end
   end
 
-  def forgotPassword
+  def forgot_password
     @forgotPassForm = ForgotPassForm.new
     render "auth/forgot_password"
   end
 
-  def handelForgotPassword
+  def handelforgot_password
     @forgotPassForm = ForgotPassForm.new(forgot_pass_params)
-    if @forgotPassForm.forgotPassword
+    if @forgotPassForm.forgot_password
       flash[:notice] = "Forgot password successfully, we have sent you the password via email!"
       redirect_to login_path
     else
