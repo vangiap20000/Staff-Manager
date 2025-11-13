@@ -22,11 +22,17 @@ class UsersController < ApplicationController
   end
 
   def new
-    @form = UserNewForm.new
+    @form = UserForm.new
   end
 
   def create
-    @form = UserNewForm.new(user_params.merge(current_user: current_user))
+    @form = UserForm.new(user_params.merge(current_user: current_user))
+
+    if check_max_member(@form.team_id)
+      flash.now[:error] = "Cannot create more members. Maximum limit reached."
+      render :new
+      return
+    end
 
     if @form.valid?
       result = create_user(@form)
@@ -42,9 +48,41 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find_by(id: params[:id])
+    if @user.nil? || current_user.id == @user.id
+      flash[:error] = "User not found."
+      redirect_to users_path
+      return
+    end
+
+    @form = UserForm.new
+  end
+
+  def update
+    @user = User.find_by(id: params[:id])
+    if @user.nil? || current_user.id == @user.id
+      flash[:error] = "User not found."
+      redirect_to users_path
+      return
+    end
+
+    @form = UserForm.new(user_params.merge(current_user: current_user, id: params[:id]))
+    if @form.valid?
+      result = update_user(@form, @user)
+      if result
+        flash[:success] = "User updated successfully."
+      else
+        flash.now[:error] = "Failed to update user."
+      end
+    end
+
+    render :edit
+  end
+
   private
   def user_params
-      params.require(:user_new_form).permit(
+      params.require(:user_form).permit(
         :name,
         :email,
         :password,

@@ -1,0 +1,53 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Name Field -->
+    <div class="md:col-span-2">
+        <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-2" do %>
+            Name<span class="text-red-500">*</span>
+        <% end %>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+            </div>
+            <%= form.text_field :name, autofocus: true,  placeholder: "Enter your full name",
+                value:  @form.errors.any? ? @form.name : (team.presence ? team&.name : ""),
+                class: [
+                    "pl-10 w-full px-4 py-3 border rounded-lg focus:outline-none input-focus transition-all",
+                    (@form.errors[:name].any? ? "border-red-500" : "border-gray-300")
+                ].join(" ") %>
+        </div>
+        <% if @form.errors[:name].any? %>
+            <p class="text-red-500 text-sm mt-1">
+            <%= @form.errors[:name].join(", ") %>
+            </p>
+        <% end %>
+    </div>
+
+    <!-- Max member-->
+    <div class="md:col-span-2">
+        <%= form.label :max_member, class: "block text-sm font-medium text-gray-700 mb-2" do %>
+            Max member<span class="text-red-500">*</span>
+        <% end %>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m10-3.13a4 4 0 10-8 0 4 4 0 008 0z" />
+                </svg>
+            </div>
+            <%= form.number_field :max_member, autofocus: true,  placeholder: "Enter max member",
+                value:  @form.errors.any? ? @form.max_member : (team.presence ? team&.max_member : ""),
+                class: [
+                    "pl-10 w-full px-4 py-3 border rounded-lg focus:outline-none input-focus transition-all",
+                    (@form.errors[:max_member].any? ? "border-red-500" : "border-gray-300")
+                ].join(" ")%>
+        </div>
+        <% if @form.errors[:max_member].any? %>
+            <p class="text-red-500 text-sm mt-1">
+            <%= @form.errors[:max_member].join(", ") %>
+            </p>
+        <% end %>
+    </div>        
+</div>

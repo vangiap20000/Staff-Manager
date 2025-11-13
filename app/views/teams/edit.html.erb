@@ -1,0 +1,27 @@
+<% content_for :page_title, "Edit team" %>
+
+<div class="form-card rounded-2xl shadow-2xl p-8">
+    <%= form_for(@form, url: team_edit_path, method: :put, html: { id: "teamForm" }) do |f| %>
+        <%= render 'teams/includes/form' , team: @team, form: f %>
+        <!-- Form Actions -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-end mt-8 pt-6 border-t border-gray-200">
+            <%= link_to teams_path, 
+                class: "px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all flex items-center justify-center" do%>
+                <%= render 'common/icon_back' %>
+                Back to list
+            <% end %>
+            <button type="submit"
+                class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg flex items-center justify-center">
+                <%= render 'common/icon_save' %>
+                Update information
+            </button>
+            <button type="button"
+                command="show-modal" commandfor="dialog" data-path="<%= team_path %>"
+                class="delete-action px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-lg hover:from-red-700 hover:to-pink-700 transition-all shadow-lg flex items-center justify-center">
+                <%= render 'common/icon_delete' %>
+                Delete
+            </button>
+        </div>
+    <% end %>
+</div>
+<%= render 'common/modal_confirm', method: :delete, path: team_path(0) %>

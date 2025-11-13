@@ -3,7 +3,6 @@ class CreateUsers < ActiveRecord::Migration[8.1]
     create_table :users do |t|
       t.string :name, null:false
       t.string :email, null:false
-      t.string :avatar
       t.string :phone_number, limit: 13
       t.references :team, null: false, foreign_key: true
       t.integer :role, comment: "1: super admin, 2: admin, 3: member"

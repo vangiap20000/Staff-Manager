@@ -47,7 +47,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_12_145305) do
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "avatar"
     t.datetime "created_at", null: false
     t.bigint "created_by_id"
     t.string "email", null: false

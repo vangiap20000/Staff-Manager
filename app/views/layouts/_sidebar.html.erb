@@ -20,13 +20,15 @@
       <span class="mx-3">Users</span>
     <% end %>
 
-    <%= link_to teams_path, class: "flex items-center px-6 py-3 text-gray-600 hover:bg-blue-50 hover:text-blue-600 #{'bg-blue-50 text-blue-600 border-r-2 border-blue-600' if controller_name == 'posts'}" do %>
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-          d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87M15 11a4 4 0 10-8 0 4 4 0 008 0zm6 8v-2a4 4 0 00-3-3.87M3 16.13A4 4 0 016 12h12a4 4 0 013 4v2">
-        </path>
-      </svg>
-      <span class="mx-3">Teams</span>
+    <% if is_supper_admin %>
+      <%= link_to teams_path, class: "flex items-center px-6 py-3 text-gray-600 hover:bg-blue-50 hover:text-blue-600 #{'bg-blue-50 text-blue-600 border-r-2 border-blue-600' if controller_name == 'teams'}" do %>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87M15 11a4 4 0 10-8 0 4 4 0 008 0zm6 8v-2a4 4 0 00-3-3.87M3 16.13A4 4 0 016 12h12a4 4 0 013 4v2">
+          </path>
+        </svg>
+        <span class="mx-3">Teams</span>
+      <% end %>
     <% end %>
 
     <div class="px-4 py-2 mt-4 text-xs font-semibold text-gray-400 uppercase">SYSTEM</div>

@@ -26,3 +26,8 @@
 .avatar-upload:hover {
     transform: scale(1.05);
 }
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+}
