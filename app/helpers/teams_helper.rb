@@ -1,6 +1,6 @@
 module TeamsHelper
   def paginated_teams(page: 1, per_page: 10, search: nil)
-    team = Team.order(:id)
+    team = Team.order(id: :desc)
     team = team.where("name LIKE ?", "%#{search}%") if search.present?
     team.page(page).per(per_page)
   end

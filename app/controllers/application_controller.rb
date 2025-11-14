@@ -27,4 +27,11 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def is_supper_admin
+    unless current_user.role == Rails.configuration.const['role'][:superAdmin]
+      flash[:error] = "You are not authorized to access this page."
+      redirect_to users_path
+    end
+  end
 end

@@ -1,6 +1,6 @@
 module UsersHelper
   def paginated_users(page: 1, per_page: 10, search: nil)
-    user = User.order(:id)
+    user = User.order(id: :desc)
     user = user.where("name LIKE ? OR email LIKE ?", "%#{search}%", "%#{search}%") if search.present?
     if current_user.role == Rails.configuration.const['role'][:admin]
       user = user.where(team_id: current_user.team_id).where(role: Rails.configuration.const['role'][:member])
@@ -13,9 +13,9 @@ module UsersHelper
 
   def destroy_user(id)
     user = User.find_by(id: params[:id])
-    unless user
-      return false
-    end
+    return false unless user
+    return false if current_user.id == user.id
+    return false unless check_is_my_member(user)
 
     role = Rails.configuration.const['role']
     if user.role == role[:admin] && current_user.role == role[:super_admin]
@@ -26,6 +26,7 @@ module UsersHelper
     user.avatar.purge if user.avatar.attached?
 
     user.destroy ? true : false
+    true
   end
 
   def is_supper_admin
@@ -88,4 +89,11 @@ module UsersHelper
     current_member_count > max_members
   end
   
+  def check_is_my_member(user)
+    return false unless user
+    return true if current_user.role == Rails.configuration.const['role'][:superAdmin]
+    return false if current_user.team_id != user.team_id
+    true
+  end
+
 end

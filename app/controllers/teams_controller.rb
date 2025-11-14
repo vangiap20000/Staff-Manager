@@ -73,13 +73,6 @@ class TeamsController < ApplicationController
     redirect_to teams_path
   end
 
-  def is_supper_admin
-    unless current_user.role == Rails.configuration.const['role'][:superAdmin]
-      flash[:error] = "You are not authorized to access this page."
-      redirect_to root_path
-    end
-  end
-
   private
   def team_params
       params.require(:team_form).permit(

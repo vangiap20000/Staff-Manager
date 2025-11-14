@@ -50,7 +50,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find_by(id: params[:id])
-    if @user.nil? || current_user.id == @user.id
+    if @user.nil? || current_user.id == @user.id || !check_is_my_member(@user)
       flash[:error] = "User not found."
       redirect_to users_path
       return
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
-    if @user.nil? || current_user.id == @user.id
+    if @user.nil? || current_user.id == @user.id || !check_is_my_member(@user)
       flash[:error] = "User not found."
       redirect_to users_path
       return

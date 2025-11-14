@@ -53,7 +53,9 @@
                             <div class="flex-shrink-0 h-10 w-10">
                                 <img class="h-10 w-10 rounded-full"
                                     src="<%= user.avatar.attached? ? url_for(user.avatar) : 'https://i.pravatar.cc/150?img=' + user.id.to_s %>"
-                                    alt="<%= user.name %>">
+                                    alt="<%= user.name %>"
+                                    onerror="this.onerror=null;this.src='<%= asset_path('avatar_default.png') %>'; "
+                                    >
 
                             </div>
                             <div class="ml-4">

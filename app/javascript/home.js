@@ -1,15 +1,13 @@
 $(document).ready(function () {
   const container = $("#dashboard-charts");
 
-  // Get data from HTML data attributes
-  const teams = JSON.parse(container.data("teams"));
-  const usersByTeam = JSON.parse(container.data("users-by-team"));
-  const usersByRole = JSON.parse(container.data("users-by-role"));
-  const teamsStatus = JSON.parse(container.data("teams-status"));
-  const usersOverTime = JSON.parse(container.data("users-over-time"));
-  const teamCapacity = JSON.parse(container.data("team-capacity"));
+  const teams = container.data("teams");
+  const usersByTeam = container.data("users-by-team");
+  const usersByRole = container.data("users-by-role");
+  const teamsStatus = container.data("teams-status");
+  const usersOverTime = container.data("users-over-time");
+  const teamCapacity = container.data("team-capacity");
 
-  // Chart colors
   const colors = {
     blue: "rgba(54, 162, 235, 0.7)",
     green: "rgba(75, 192, 192, 0.7)",
@@ -19,7 +17,6 @@ $(document).ready(function () {
     orange: "rgba(255, 159, 64, 0.7)",
   };
 
-  // Chart 1: Users by Team (Bar Chart)
   const ctxTeam = $("#usersByTeamChart");
   new Chart(ctxTeam, {
     type: "bar",
@@ -41,7 +38,6 @@ $(document).ready(function () {
     },
   });
 
-  // Chart 2: Users by Role (Pie Chart)
   const ctxRole = $("#usersByRoleChart");
   new Chart(ctxRole, {
     type: "pie",
@@ -54,9 +50,17 @@ $(document).ready(function () {
         },
       ],
     },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
   });
 
-  // Chart 3: Teams Status (Doughnut Chart)
   const ctxStatus = $("#teamsStatusChart");
   new Chart(ctxStatus, {
     type: "doughnut",
@@ -71,7 +75,6 @@ $(document).ready(function () {
     },
   });
 
-  // Chart 4: Users Over Time (Line Chart)
   const ctxOverTime = $("#usersOverTimeChart");
   new Chart(ctxOverTime, {
     type: "line",
@@ -90,7 +93,6 @@ $(document).ready(function () {
     },
   });
 
-  // Chart 5: Team Capacity (Horizontal Bar Chart)
   const ctxCap = $("#teamCapacityChart");
   new Chart(ctxCap, {
     type: "bar",

@@ -63,86 +63,85 @@
     </div>
 </div>
 
-<div id="dashboard-charts" class="hidden"
-     data-teams="<%= @teams.map(&:name).to_json %>"
-     data-users-by-team="<%= @users_by_team.to_json %>"
-     data-users-by-role="<%= @users_by_role.to_json %>"
-     data-teams-status="<%= @teams_status.to_json %>"
-     data-users-over-time="<%= @users_over_time.to_json %>"
-     data-team-capacity="<%= @team_capacity.to_json %>">
-</div>
+<div id="dashboard-charts"
+    data-teams="<%= @teams.map(&:name).to_json %>"
+    data-users-by-team="<%= @users_by_team.to_json %>"
+    data-users-by-role="<%= @users_by_role.to_json %>"
+    data-teams-status="<%= @teams_status.to_json %>"
+    data-users-over-time="<%= @users_over_time.to_json %>"
+    data-team-capacity="<%= @team_capacity.to_json %>">
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Distribute Users by Team -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-medium mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1c.6 0 1-.4 1-1s-.4-1-1-1h-1V4c0-1.1-.9-2-2-2H6C4.9 2 4 2.9 4 4v7H3c-.6 0-1 .4-1 1s.4 1 1 1zM6 4h12v7H6V4z" />
+                </svg>
+                Distribute Users by Team
+            </h3>
+            <div class="h-80">
+                <canvas id="usersByTeamChart"></canvas>
+            </div>
+        </div>
 
-<!-- Charts Section -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-    <!-- Distribute Users by Team -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-medium mb-4 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M3 13h1v7c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-7h1c.6 0 1-.4 1-1s-.4-1-1-1h-1V4c0-1.1-.9-2-2-2H6C4.9 2 4 2.9 4 4v7H3c-.6 0-1 .4-1 1s.4 1 1 1zM6 4h12v7H6V4z" />
-            </svg>
-            Distribute Users by Team
-        </h3>
-        <div class="h-80">
-            <canvas id="usersByTeamChart"></canvas>
+        <!-- Distribution of Users by Role -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-medium mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm0 2c-2.7 0-8 1.3-8 4v2h16v-2c0-2.7-5.3-4-8-4z" />
+                </svg>
+                Distribution of Users by Role
+            </h3>
+            <div class="h-80">
+                <canvas id="usersByRoleChart"></canvas>
+            </div>
         </div>
     </div>
 
-    <!-- Distribution of Users by Role -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-medium mb-4 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-green-500" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm0 2c-2.7 0-8 1.3-8 4v2h16v-2c0-2.7-5.3-4-8-4z" />
-            </svg>
-            Distribution of Users by Role
-        </h3>
-        <div class="h-80">
-            <canvas id="usersByRoleChart"></canvas>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Teams Status -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-medium mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-yellow-500" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zm-8 0c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3zm0 2c-2.2 0-6 1.1-6 3.3V18h12v-1.7C14 14.1 10.2 13 8 13zm8 0c-.3 0-.7 0-1 .1 1.2 1.3 2 3 2 4.9V18h4v-1.7c0-2.2-3.6-3.3-5-3.3z" />
+                </svg>
+                Teams Status
+            </h3>
+            <div class="h-80">
+                <canvas id="teamsStatusChart"></canvas>
+            </div>
+        </div>
+
+        <!--Users over time -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-medium mb-4 flex items-center">
+                <svg class="w-5 h-5 mr-2 text-purple-500" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+                </svg>
+                Users over time
+            </h3>
+            <div class="h-80">
+                <canvas id="usersOverTimeChart"></canvas>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-    <!-- Teams Status -->
-    <div class="bg-white rounded-lg shadow p-6">
+    <!-- Team Capacity -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
         <h3 class="text-lg font-medium mb-4 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-yellow-500" viewBox="0 0 24 24" fill="currentColor">
+            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
                 <path
-                    d="M16 11c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3zm-8 0c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3zm0 2c-2.2 0-6 1.1-6 3.3V18h12v-1.7C14 14.1 10.2 13 8 13zm8 0c-.3 0-.7 0-1 .1 1.2 1.3 2 3 2 4.9V18h4v-1.7c0-2.2-3.6-3.3-5-3.3z" />
+                    d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z" />
             </svg>
-            Teams Status
+            Teams Capacity
         </h3>
-        <div class="h-80">
-            <canvas id="teamsStatusChart"></canvas>
+        <div class="h-96">
+            <canvas id="teamCapacityChart"></canvas>
         </div>
-    </div>
-
-    <!--Users over time -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-lg font-medium mb-4 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-purple-500" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
-            </svg>
-            Users over time
-        </h3>
-        <div class="h-80">
-            <canvas id="usersOverTimeChart"></canvas>
-        </div>
-    </div>
-</div>
-
-<!-- Team Capacity -->
-<div class="bg-white rounded-lg shadow p-6 mb-6">
-    <h3 class="text-lg font-medium mb-4 flex items-center">
-        <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
-            <path
-                d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 8l-9 9z" />
-        </svg>
-        Teams Capacity
-    </h3>
-    <div class="h-96">
-        <canvas id="teamCapacityChart"></canvas>
     </div>
 </div>

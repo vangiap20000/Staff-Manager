@@ -3,8 +3,7 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*
-!/log/.keep
-/tmp/
+/tmp/*
 
 # Ignore uploaded files in storage (if using Active Storage)
 /storage/*

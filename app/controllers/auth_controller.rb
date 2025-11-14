@@ -11,7 +11,13 @@ class AuthController < ApplicationController
     if @form.login
       session[:user_id] = LoginForm.user.id
       flash[:notice] = "Login successful!"
-      redirect_to root_path
+
+      if LoginForm.user.role == Rails.configuration.const['role'][:superAdmin]
+        redirect_to root_path
+      else
+        redirect_to users_path
+      end
+      
     else
       unless LoginForm.validation_enabled
         flash.now[:alert] = "Incorrect email or password"
