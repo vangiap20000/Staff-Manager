@@ -1,6 +1,5 @@
 class ProfileController < ApplicationController
   before_action :require_login
-  include ProfileHelper
   def index
     @form = ProfileForm.new
   end
@@ -8,7 +7,7 @@ class ProfileController < ApplicationController
   def update
     @form = ProfileForm.new(profile_params)
     if @form.valid?
-      result = update_profile(@form, current_user)
+      result = ProfileService.update_profile(@form, current_user)
       if result
         flash[:success] = "Profile updated successfully."
       else

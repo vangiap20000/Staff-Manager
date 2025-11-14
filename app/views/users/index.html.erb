@@ -1,9 +1,10 @@
+<% content_for :title, "List users" %>
 <% content_for :page_title, "List users" %>
 
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0 sm:space-x-2">
   <%= link_to "Create New", new_user_path, class: "px-4 py-2 bg-green-600 text-white rounded-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md" %>
 
-  <form action="<%= users_path %>" method="get" class="flex flex-1 max-w-md">
+  <form action="<%= users_path %>" method="get" class="flex flex-1 gap-x-1.5 <%= is_supper_admin ? 'max-w-3xl' : 'max-w-md' %>">
     <input 
       type="text" 
       name="search" 
@@ -11,6 +12,35 @@
       class="flex-1 px-4 py-2 border border-gray-300 rounded-l-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm"
       value="<%= params[:search] %>"
     >
+
+    <% if is_supper_admin %>
+        <!-- FILTER TEAM -->
+        <select 
+            name="team_id" 
+            class="flex-1 px-4 py-2 border border-gray-300 rounded-l-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm max-w-[150px]"
+        >
+        <option value="">All Teams</option>
+            <% @teams.each do |team| %>
+                <option value="<%= team.id %>" <%= "selected" if params[:team_id].to_s == team.id.to_s %>>
+                    <%= team.name %>
+                </option>
+            <% end %>
+        </select>
+
+        <!-- FILTER ROLE -->
+        <select 
+            name="role" 
+            class="flex-1 px-4 py-2 border border-gray-300 rounded-l-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm max-w-[150px]"
+        >
+            <option value="">All Roles</option>
+            <% @roles.each do |value, key| %>
+                <option value="<%= value %>" <%= "selected" if params[:role].to_s == value.to_s %>>
+                    <%= key.to_s.humanize %>
+                </option>
+            <% end %>
+        </select>
+    <% end %>
+
     <button 
       type="submit" 
       class="px-4 py-2 bg-indigo-600 text-white rounded-r-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md"

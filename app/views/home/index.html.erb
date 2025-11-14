@@ -1,3 +1,4 @@
+<% content_for :title, "Dashboard" %>
 <% content_for :head do %>
  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
  <%= javascript_include_tag "home", "data-turbo-track": "reload" %>
@@ -15,7 +16,7 @@
             </div>
             <div class="ml-4">
                 <h3 class="text-sm font-medium text-gray-500">Total Users</h3>
-                <p class="text-2xl font-semibold"><%= @users_count %></p>
+                <p class="text-2xl font-semibold"><%= @stats[:users_count] %></p>
             </div>
         </div>
     </div>
@@ -29,7 +30,7 @@
             </div>
             <div class="ml-4">
                 <h3 class="text-sm font-medium text-gray-500">Total Teams</h3>
-                <p class="text-2xl font-semibold"><%= @teams_count %></p>
+                <p class="text-2xl font-semibold"><%= @stats[:teams_count] %></p>
             </div>
         </div>
     </div>
@@ -43,7 +44,7 @@
             </div>
             <div class="ml-4">
                 <h3 class="text-sm font-medium text-gray-500">Admin Users</h3>
-                <p class="text-2xl font-semibold"><%= @admins_count %></p>
+                <p class="text-2xl font-semibold"><%= @stats[:admins_count] %></p>
             </div>
         </div>
     </div>
@@ -57,19 +58,19 @@
             </div>
             <div class="ml-4">
                 <h3 class="text-sm font-medium text-gray-500">Teams are full</h3>
-                <p class="text-2xl font-semibold"><%= @team_full_count %></p>
+                <p class="text-2xl font-semibold"><%= @stats[:team_full_count] %></p>
             </div>
         </div>
     </div>
 </div>
 
 <div id="dashboard-charts"
-    data-teams="<%= @teams.map(&:name).to_json %>"
-    data-users-by-team="<%= @users_by_team.to_json %>"
-    data-users-by-role="<%= @users_by_role.to_json %>"
-    data-teams-status="<%= @teams_status.to_json %>"
-    data-users-over-time="<%= @users_over_time.to_json %>"
-    data-team-capacity="<%= @team_capacity.to_json %>">
+    data-teams="<%= @stats[:teams].to_json %>"
+    data-users-by-team="<%= @stats[:users_by_team].to_json %>"
+    data-users-by-role="<%= @stats[:users_by_role].to_json %>"
+    data-teams-status="<%= @stats[:teams_status].to_json %>"
+    data-users-over-time="<%= @stats[:users_over_time].to_json %>"
+    data-team-capacity="<%= @stats[:team_capacity].to_json %>">
     <!-- Charts Section -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <!-- Distribute Users by Team -->

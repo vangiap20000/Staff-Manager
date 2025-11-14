@@ -1,11 +1,9 @@
 class TeamsController < ApplicationController
   before_action :require_login, :is_supper_admin 
-  include TeamsHelper
   def index
     page = params[:page] || 1
-    perPage = Rails.configuration.const['per_page']
     search = params[:search]
-    @teams = paginated_teams(page: page, per_page:perPage, search: search)
+    @teams = TeamService.paginated_teams(page: page, search: search)
   end
 
   def new
@@ -27,7 +25,7 @@ class TeamsController < ApplicationController
     @form = TeamForm.new(team_params)
 
     if @form.valid?
-      result = create_team(@form)
+      result = TeamService.create_team(@form)
       if result
         flash[:success] = "Team created successfully."
         redirect_to teams_path
@@ -50,7 +48,7 @@ class TeamsController < ApplicationController
 
     @form = TeamForm.new(team_params.merge(id: @team.id))
     if @form.valid?
-      result = update_team(@team, @form)
+      result = TeamService.update_team(@team, @form)
       if result
         flash[:success] = "Team updated successfully."
       else
@@ -63,7 +61,7 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    result = destroy_team(params[:id])
+    result = TeamService.destroy_team(params[:id])
     if result
       flash[:success] = "Team deleted successfully."
     else

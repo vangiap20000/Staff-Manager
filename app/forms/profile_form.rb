@@ -1,6 +1,5 @@
 class ProfileForm
   include ActiveModel::Model
-  include UsersHelper
 
   attr_accessor :id, :avatar, :name, :phone_number, :password, :password_confirmation, :created_by_id
 
