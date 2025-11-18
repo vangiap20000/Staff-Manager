@@ -87,4 +87,10 @@ class UserService
     user.save ? user : nil
   end
 
+  def self.find_user_by_email_and_not_in_role(email, role)
+    User.where(email: email)
+      .where.not(role: role)
+      .first
+  end
+
 end

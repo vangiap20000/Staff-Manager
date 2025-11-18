@@ -24,9 +24,10 @@ class LoginForm
     end
 
     @@is_validation_enabled = false
-    user = User.where(email: self.email)
-          .where.not(role: Rails.configuration.const['role'][:member])
-          .first
+    user = UserService.find_user_by_email_and_not_in_role(
+      self.email,
+      Rails.configuration.const['role'][:member]
+    )
     @@user = user
     user&.authenticate(self.password)
   end
