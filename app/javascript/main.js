@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('.delete-action').on('click', function () {
-        var path = $(this).data('path');
+        let path = $(this).data('path');
         $('#modal-confirm-actions form').attr('action', path);
     });
 
@@ -10,10 +10,10 @@ $(document).ready(function () {
 
 
     $('#avatarInput').on('change', function (event) {
-        var input = event.target;
+        let input = event.target;
 
         if (input.files && input.files[0]) {
-            var reader = new FileReader();
+            let reader = new FileReader();
 
             reader.onload = function (e) {
                 $('#avatarPreview').attr('src', e.target.result);

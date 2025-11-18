@@ -27,7 +27,10 @@
         <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden peer-checked:block form-btn-logout">
           <%= link_to "Profile", profile_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
           <div class="border-t border-gray-100"></div>
-          <%= button_to "Logout", logout_path, method: :delete, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+          <button class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            command="show-modal" commandfor="<%= Rails.configuration.const['id_modal_confirm_logout'] %>">
+              Logout
+          </button>
         </div>
       </div>
     </div>

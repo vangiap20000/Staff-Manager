@@ -1,6 +1,7 @@
 <el-dialog>
-    <dialog id="dialog" aria-labelledby="dialog-title"
-        class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
+    <% id_modal ||= "dialog" %>
+    <dialog id="<%= id_modal %>" aria-labelledby="dialog-title"
+        class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent modal-confirm">
         <el-dialog-backdrop
             class="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"></el-dialog-backdrop>
 
@@ -23,7 +24,7 @@
                             <h3 id="dialog-title" class="text-base font-semibold text-gray-900">Warning about this action</h3>
                             <div class="mt-2">
                                 <% text ||= nil %>
-                                <p class="text-sm text-gray-500"><%= text.presence || 'Are you sure about this action?' %></p>
+                                <p class="text-sm text-gray-500" id="modal-text"><%= text.presence || 'Are you sure about this action?' %></p>
                             </div>
                         </div>
                     </div>
@@ -33,11 +34,11 @@
                         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                         <%= submit_tag "Submit", 
                                 class: "cursor-pointer inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto",
-                                command: "close", commandfor: "dialog" %>
+                                command: "close", commandfor: id_modal %>
                     <% end %>
 
 
-                    <button type="button" command="close" commandfor="dialog"
+                    <button type="button" command="close" commandfor="<%= id_modal %>"
                         class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                 </div>
             </el-dialog-panel>

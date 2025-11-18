@@ -26,7 +26,7 @@ class TeamService
     team.save ? team : false
   end
 
-  def self.paginated_teams(page: 1, per_page: 10, search: nil)
+  def self.paginated_teams(page: 1, search: nil)
     teams = Team.order(id: :desc)
     teams = teams.where("name LIKE ?", "%#{search}%") if search.present?
     per_page = Rails.configuration.const['per_page']

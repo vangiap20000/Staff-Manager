@@ -9,4 +9,7 @@
 /storage/*
 !/storage/.keep
 
+# Ignore mysql data in docker
+/.docker/mysql/mysql_data/*
+
 Gemfile.lock

@@ -74,12 +74,12 @@ $(document).ready(function () {
       ],
     },
   });
-
+  
   const ctxOverTime = $("#usersOverTimeChart");
   new Chart(ctxOverTime, {
     type: "line",
     data: {
-      labels: ["January", "February", "March", "April", "May", "June"],
+      labels: getLast6MonthsLabels(),
       datasets: [
         {
           label: "Total Users",
@@ -114,3 +114,17 @@ $(document).ready(function () {
     options: { indexAxis: "y" },
   });
 });
+
+function getLast6MonthsLabels() {
+  const labels = [];
+  const now = new Date();
+
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    labels.push(
+      d.toLocaleString('en-US', { month: 'long' })
+    );
+  }
+
+  return labels;
+}

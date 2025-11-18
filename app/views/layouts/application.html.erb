@@ -54,6 +54,12 @@
           </div>
         </main>
       </div>
+      <!-- Modal confirm delete -->
+      <%= render 'common/modal_confirm', method: yield(:modal_confirm_method),  path: "", text: yield(:modal_confirm_text) %>
+
+      <!-- Modal confirm logout -->
+      <%= render 'common/modal_confirm', method: :delete,  path: logout_path, 
+        text: "Are you sure you want to log out?", id_modal: Rails.configuration.const['id_modal_confirm_logout']  %>
     </div>
   </body>
 </html>

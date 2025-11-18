@@ -1,5 +1,7 @@
 <% content_for :title, "Edit user" %>
 <% content_for :page_title, "Edit user" %>
+<% content_for :modal_confirm_method, :delete%>
+<% content_for :modal_confirm_text, "Are you sure you want to delete this user?" %>
 
 <div class="form-card rounded-2xl shadow-2xl p-8">
     <%= form_for(@form, url: user_edit_path, method: :put, html: { id: "memberForm" }) do |f| %>
@@ -25,4 +27,3 @@
         </div>
     <% end %>
 </div>
-<%= render 'common/modal_confirm', method: :delete, path: user_path(0) %>

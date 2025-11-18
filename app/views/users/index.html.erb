@@ -1,5 +1,7 @@
 <% content_for :title, "List users" %>
 <% content_for :page_title, "List users" %>
+<% content_for :modal_confirm_method, :delete%>
+<% content_for :modal_confirm_text, "Are you sure you want to delete this user?" %>
 
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0 sm:space-x-2">
   <%= link_to "Create New", new_user_path, class: "px-4 py-2 bg-green-600 text-white rounded-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md" %>
@@ -133,5 +135,3 @@
 <div class="mt-4 text-center">
   <%= paginate @users %>
 </div>
-
-<%= render 'common/modal_confirm', method: :delete, path: user_path(0) %>
