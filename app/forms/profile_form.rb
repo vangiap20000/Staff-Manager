@@ -34,4 +34,12 @@ class ProfileForm
       errors.add(:avatar, "File must not be larger than 5MB")
     end
   end
+
+  def to_h
+    {
+      name: name,
+      phone_number: phone_number,
+      password: password,
+    }
+  end
 end

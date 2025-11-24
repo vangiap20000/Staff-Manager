@@ -17,18 +17,6 @@ class ForgotPassForm
     end
 
     @@is_validation_enabled = false
-    user = User.find_by(email: self.email)
-    if user
-      new_password = SecureRandom.alphanumeric(10)
-
-      user.update(password: new_password)
-
-      UserMailer.with(user: user, password: new_password).send_new_password.deliver_now
-
-      return true
-    end
-
-    return false
-
+    AuthService.reset_password(email)
   end
 end

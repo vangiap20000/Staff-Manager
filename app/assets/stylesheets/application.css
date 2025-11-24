@@ -35,3 +35,20 @@
 .form-btn-logout form {
     margin-bottom: 0;
 }
+
+.sidebar #sidebarToggle::after {
+    font-weight: 900;
+    content: '\f104';
+    font-family: 'Font Awesome 5 Free';
+    margin-right: .1rem;
+}
+
+.sidebar {
+    background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+}
+
+.sidebar #sidebarToggle.is-toggled::after {
+    content: '\f105';
+    font-family: 'Font Awesome 5 Free';
+    margin-left: .25rem;
+}

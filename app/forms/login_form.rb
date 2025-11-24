@@ -24,11 +24,9 @@ class LoginForm
     end
 
     @@is_validation_enabled = false
-    user = UserService.find_user_by_email_and_not_in_role(
-      self.email,
-      Rails.configuration.const['role'][:member]
-    )
-    @@user = user
-    user&.authenticate(self.password)
+    @@user = AuthService.handel_authenticate(email, password)
+    
+    return false if @@user.nil?
+    true
   end
 end

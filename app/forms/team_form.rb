@@ -28,4 +28,11 @@ class TeamForm
       errors.add(:max_member, "Max member is currently lower than the current number of users in the team.")
     end
   end
+
+  def to_h
+    {
+      "name" => name,
+      "max_member" => max_member
+    }
+  end
 end

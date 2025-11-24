@@ -56,4 +56,15 @@ class UserForm
     end
   end
 
+  def to_h
+    {
+      "name" => name,
+      "email" => email,
+      "phone_number" => phone_number,
+      "team_id" => team_id,
+      "role" => role,
+      "password" => password,
+      "created_by_id" => current_user.id
+    }
+  end
 end

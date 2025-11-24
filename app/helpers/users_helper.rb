@@ -1,6 +1,12 @@
 module UsersHelper
-  def is_supper_admin
-    current_user.role == Rails.configuration.const['role'][:superAdmin]
+  def is_supper_admin(current_user_param = nil)
+    current_user_val = current_user_param || current_user
+    current_user_val.role == Rails.configuration.const['role'][:superAdmin]
+  end
+
+  def is_admin(current_user_param = nil)
+    current_user_val = current_user_param || current_user
+    current_user_val.role == Rails.configuration.const['role'][:admin]
   end
 
   def check_max_member(team_id = nil)

@@ -1,28 +1,26 @@
 class UserService
   include UsersHelper
+
   def initialize(current_user)
     @current_user = current_user
+    @const = Rails.configuration.const
   end
 
   def paginated_users(page: 1, search: nil, role: nil, team_id: nil)
     user = User.order(id: :desc)
     user = user.where("name LIKE ? OR email LIKE ?", "%#{search}%", "%#{search}%") if search.present?
-    if @current_user.role == Rails.configuration.const['role'][:admin]
-      user = user.where(team_id: @current_user.team_id).where(role: Rails.configuration.const['role'][:member])
-    elsif @current_user.role == Rails.configuration.const['role'][:superAdmin]
-      user = user.where.not(role: Rails.configuration.const['role'][:superAdmin])
+    role_config = @const['role']
 
-      if role.present?
-        user = user.where(role: role)
-      end
-
-      if team_id.present?
-        user = user.where(team_id: team_id)
-      end
-      
+    case true
+    when is_admin(@current_user)
+      user = user.where(team_id: @current_user.team_id).where(role: role_config[:member])
+    when is_supper_admin(@current_user)
+      user = user.where.not(role: role_config[:superAdmin])
+      user = user.where(role: role) if role.present?
+      user = user.where(team_id: team_id) if team_id.present?
     end
 
-    per_page = Rails.configuration.const['per_page']
+    per_page = @const['per_page']
     user.page(page).per(per_page)
   end
 
@@ -32,59 +30,44 @@ class UserService
     return false if @current_user.id == user.id
     return false unless check_is_my_member(user, @current_user)
 
-    role = Rails.configuration.const['role']
-    if user.role == role[:admin] && @current_user.role == role[:superAdmin]
+    role = @const['role']
+    if is_admin(user) && is_supper_admin(@current_user)
       User.where(created_by_id: user.id).where(role: role[:member]).destroy_all
     end
 
     user.avatar.purge if user.avatar.attached?
 
     user.destroy ? true : false
-    true
   end
 
   def create_user(form)
-    if form.current_user.role == Rails.configuration.const['role'][:admin]
-      form.role = Rails.configuration.const['role'][:member]
-      form.team_id = form.current_user.team_id
+    data = form.to_h
+    if is_admin(form.current_user)
+      data['role'] = @const['role'][:member]
+      data['team_id'] = form.current_user.team_id
     end
 
-    user = User.new(
-      name: form.name,
-      email: form.email,
-      phone_number: form.phone_number,
-      role: form.role,
-      team_id: form.team_id,
-      created_by_id: form.current_user.id,
-      password: form.password
-    )
+    user = User.new(data)
 
-    if user.save && form.avatar.present?
-      user.avatar.attach(form.avatar)
-    end
+    user.avatar.attach(form.avatar) if user.save && form.avatar.present?
 
     user.persisted? ? user : nil
   end
 
   def update_user(form, user)
-    user.name = form.name
-    user.email = form.email
-    user.phone_number = form.phone_number
-    if form.current_user.role == Rails.configuration.const['role'][:superAdmin]
-      user.role = form.role
-      user.team_id = form.team_id
-    end
+    data = form.to_h
 
-    if form.password.present?
-      user.password = form.password
-    end
+    data.except!("created_by_id")
+    data.except!("role", "team_id") if is_admin(form.current_user)
 
-    if form.avatar.present?
+    result = user.update(data)
+
+    if result && form.avatar.present?
       user.avatar.purge if user.avatar.attached?
       user.avatar.attach(form.avatar)
     end
-
-    user.save ? user : nil
+    
+    result ? user : nil
   end
 
   def self.find_user_by_email_and_not_in_role(email, role)

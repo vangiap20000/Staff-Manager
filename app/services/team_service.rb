@@ -1,29 +1,21 @@
 class TeamService
   def self.destroy_team(id)
-    team = Team.find_by(id: id)
+    team = Team.find(id)
     return false unless team
-
-    team.users.each do |user|
-      user.avatar.purge if user.avatar.attached?
-      user.destroy
-    end
+    
+    User.where(team_id: id).update_all(created_by_id: nil)
 
     team.destroy ? true : false
   end
 
   def self.create_team(form)
-    team = Team.new(
-      name: form.name,
-      max_member: form.max_member
-    )
-
+    team = Team.new(form.to_h)
     team.save ? true : false
   end
 
   def self.update_team(team, form)
-    team.name = form.name
-    team.max_member = form.max_member
-    team.save ? team : false
+    result = team.update(form.to_h)
+    result ? team : false
   end
 
   def self.paginated_teams(page: 1, search: nil)

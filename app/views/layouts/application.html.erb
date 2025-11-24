@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <html>
   <head>
@@ -8,11 +9,13 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "fontawesome-free-all.min", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <%= javascript_include_tag "main", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "dropdown_controller", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "sidebar", "data-turbo-track": "reload" %>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,44 +25,69 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-    <link rel="icon" href="/favicon.png" type="image/png">
-    <link rel="icon" href="/favicon.png" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="icon" href="/logo.png" type="image/png">
+    <link rel="icon" href="/logo.png" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/logo.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-  </head>
+</head>
 
-  <body class="bg-gray-100">
+<body>
+
+    <!-- Page Wrapper -->
     <div class="flex h-screen">
-      <!-- Sidebar -->
-      <%= render 'layouts/sidebar' %>
 
-      <!-- Main content -->
-      <div class="flex-1 flex flex-col overflow-hidden">
-        <!-- Header -->
-        <%= render 'layouts/header' %>
+        <!-- Sidebar -->
+        <%= render 'layouts/sidebar' %>
+        <!-- End of Sidebar -->
 
-        <!-- Breadcrumb -->
-        <%= render 'layouts/breadcrumb' %>
+        <!-- Content Wrapper -->
+        <div class="flex flex-col flex-1 overflow-hidden">
 
-        <!-- Main content area -->
-        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-          <div class="container mx-auto px-6 py-8">
-            <!-- Flash messages -->
-            <%= render 'layouts/flash_messages' %>
-            
-            <!-- Page content -->
-            <%= yield %>
-          </div>
-        </main>
-      </div>
-      <!-- Modal confirm delete -->
-      <%= render 'common/modal_confirm', method: yield(:modal_confirm_method),  path: "", text: yield(:modal_confirm_text) %>
+            <!-- Main Content -->
+            <div class="flex flex-col flex-1 overflow-auto">
 
-      <!-- Modal confirm logout -->
-      <%= render 'common/modal_confirm', method: :delete,  path: logout_path, 
-        text: "Are you sure you want to log out?", id_modal: Rails.configuration.const['id_modal_confirm_logout']  %>
+                <!-- Header -->
+                <%= render 'layouts/header' %>
+
+                <!-- Begin Page Content -->
+                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+                    <!-- Breadcrumb -->
+                    <%= render 'layouts/breadcrumb' %>
+                    <div class="container mx-auto px-6 py-8">
+                        <!-- Flash messages -->
+                        <%= render 'layouts/flash_messages' %>
+                        
+                        <!-- Page content -->
+                        <%= yield %>
+                    </div>
+                </main>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="bg-white border-t border-gray-200 mt-auto">
+                <div class="container mx-auto px-6 py-4">
+                    <div class="text-center text-gray-600">
+                        <span>Copyright &copy; staff manager 2025</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
     </div>
-  </body>
+    <!-- End of Page Wrapper -->
+    <!-- Modal confirm delete -->
+    <%= render 'common/modal_confirm', method: yield(:modal_confirm_method),  path: "", text: yield(:modal_confirm_text) %>
+
+    <!-- Modal confirm logout -->
+    <%= render 'common/modal_confirm', method: :delete,  path: logout_path, 
+        text: "Are you sure you want to log out?", id_modal: Rails.configuration.const['id_modal_confirm_logout']  %>
+</body>
+
 </html>
