@@ -3,7 +3,6 @@ services:
     db: 
         container_name: staff_manager_db
         image: mysql:8.0
-        restart: always
         environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: staff_manager
@@ -11,6 +10,9 @@ services:
           MYSQL_PASSWORD: password
         ports:
           - "3307:3306"
+        volumes:
+          - ./.docker/mysql/mysql_data:/var/lib/mysql
+          - ./.docker/mysql/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: staff_manager_phpmyadmin
@@ -26,7 +28,7 @@ services:
     app:
         container_name: staff_manager_app
         build: .
-        command: bundle exec rails s -p 3000 -b '0.0.0.0'
+        command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b 0.0.0.0"
         volumes: 
           - ".:/app"
         ports: 
@@ -36,7 +38,13 @@ services:
         links:
           - db
         environment:
-          DB_USER: root
-          DB_NAME: app
+          DB_USER: user
+          DB_NAME: staff_manager
           DB_PASSWORD: password
-          DB_HOST: db
+          DB_HOST: staff_manager_db
+    mailcatcher:
+      image: schickling/mailcatcher
+      container_name: mailcatcher
+      ports:
+        - "1080:1080"
+        - "1025:1025"

@@ -1,0 +1,57 @@
+default: &default
+  home:
+    name: "Dashboard"
+    action: "index"
+    controller: "home"
+  profile:
+    name: "My profile"
+    action: "index"
+    controller: "profile"
+    parent: 
+      root: "Dashboard" 
+  users:
+    name: "List Users"
+    action: "index"
+    controller: "users"
+    parent: 
+      root: "Dashboard" 
+  new_user:
+    name: "Create"
+    action: "new"
+    controller: "users"
+    parent: 
+      root: "Dashboard"
+      users: "Users"
+  edit_user:
+    name: "Edit"
+    action: "edit"
+    controller: "users"
+    parent: 
+      root: "Dashboard"
+      users: "Users"
+  teams:
+    name: "List teams"
+    action: "index"
+    controller: "teams"
+    parent: 
+      root: "Dashboard"
+  new_team:
+    name: "Create"
+    action: "new"
+    controller: "teams"
+    parent: 
+      root: "Dashboard" 
+      teams: "Teams"
+  edit_team:
+    name: "Edit"
+    action: "edit"
+    controller: "teams"
+    parent: 
+      root: "Dashboard" 
+      teams: "Teams"
+
+development:
+  <<: *default
+
+production:
+  <<: *default

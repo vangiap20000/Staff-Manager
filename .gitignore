@@ -1,0 +1,15 @@
+# Ignore bundler config
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+
+# Ignore uploaded files in storage (if using Active Storage)
+/storage/*
+!/storage/.keep
+
+# Ignore mysql data in docker
+/.docker/mysql/mysql_data/*
+
+Gemfile.lock

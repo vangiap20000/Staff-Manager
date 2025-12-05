@@ -1,0 +1,38 @@
+<header class="bg-white shadow-sm">
+  <div class="flex items-center justify-between px-6 py-4 h-16">
+    <div class="flex items-center">
+      <h2 class="text-xl font-semibold text-gray-800">
+        <%= content_for?(:page_title) ? yield(:page_title) : "Dashboard" %>
+      </h2>
+    </div>
+    
+    <div class="flex items-center space-x-4">
+      <!-- User menu -->
+      <div class="relative">
+        <input type="checkbox" id="dropdown-toggle" class="hidden peer" />
+        <label for="dropdown-toggle" class="flex items-center space-x-2 px-4 py-2 rounded-md cursor-pointer">
+          <% if current_user.avatar.attached? %>
+            <img class="w-8 h-8 rounded-full" src="<%= url_for(current_user.avatar) %>" alt="<%= current_user.name %>">
+          <% else %>
+            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+              <%= current_user.name.split.map { |word| word[0] }.join.upcase %>
+            </div>
+          <% end %>
+          <span class="text-gray-700"><%= current_user.email %></span>
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </label>
+        
+        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden peer-checked:block form-btn-logout">
+          <%= link_to "Profile", profile_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" %>
+          <div class="border-t border-gray-100"></div>
+          <button class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            command="show-modal" commandfor="<%= Rails.configuration.const['id_modal_confirm_logout'] %>">
+              Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

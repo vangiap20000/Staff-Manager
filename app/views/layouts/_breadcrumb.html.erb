@@ -1,0 +1,44 @@
+<nav class="text-gray-500 mb-6 px-4 py-2" aria-label="Breadcrumb">
+    <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <% breadcrumbs = Rails.configuration.breadcrumb %>
+        <% breadcrumbs.each do |key, value| %>
+            <%
+                route = { controller: value[:controller], action: value[:action] }
+                if value[:action] == "edit"
+                    next unless params[:id].present?
+                    route[:id] = params[:id]
+                end
+
+                current_route = current_page?(route)
+                parent_routes = value[:parent].dup || []
+                unless is_supper_admin
+                    parent_routes.shift
+                end
+            %>
+            <% if current_route %>
+                <% parent_routes.each_with_index do |(parent_key, parent_value), idx| %>
+                    <li class="inline-flex items-center">
+                        <%= link_to parent_key, class: "text-gray-500 hover:text-gray-700 inline-flex items-center" do %>
+                            <% if idx.zero? %>
+                                <%= render 'common/icon_solid_home' %>
+                            <% else %>
+                                <%= render 'common/icon_arrow_right' %>
+                            <% end %>
+                            <%= parent_value %>
+                        <% end %>
+                    </li>
+                <% end %>
+                <li>
+                    <div class="flex items-center">
+                        <% if parent_routes.empty? %>
+                           <%= render 'common/icon_solid_home' %>
+                        <% else %>
+                           <%= render 'common/icon_arrow_right' %>
+                        <% end %>
+                        <span class="ml-1 text-gray-500 hover:text-gray-700"><%= value[:name] %></span>
+                    </div>
+                </li>
+            <% end %>
+        <% end %>
+    </ol>
+</nav>

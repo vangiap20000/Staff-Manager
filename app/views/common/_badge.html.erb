@@ -1,0 +1,9 @@
+<% alert_class = case type
+   when 1 then "bg-red-50 text-red-700 inset-ring-red-600/10"
+   when 2 then "bg-yellow-50 text-yellow-800 inset-ring-yellow-600/20"
+   else "bg-green-50 text-green-700 inset-ring-green-600/20"
+end %>
+
+<span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium inset-ring <%= alert_class %>">
+  <%= text %>
+</span>
